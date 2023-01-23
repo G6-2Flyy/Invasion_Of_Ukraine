@@ -43,10 +43,10 @@
    <script src="https://d3js.org/d3.v5.min.js"></script>
 
    <!-- JavaScript -->
-   <script type="text/javascript" src="js/map.js"></script>    
+   <script type="text/javascript" src="js/data.js"></script>    
 
    <!-- Our CSS -->
-   <link rel="stylesheet" type="text/css" href="css/map.css">
+   <link rel="stylesheet" type="text/css" href="css/data.css">
 
 </head>
 
@@ -84,8 +84,8 @@
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Data</a>
                   <div class="dropdown-menu">
-                      <a class="dropdown-item" href="visualizations/temp.html">Data Tables</a>
-                      <a class="dropdown-item" href="visualizations/humidity.html">References</a>
+                      <a class="dropdown-item" href="visualizations/data.html">Data Tables</a>
+                      <a class="dropdown-item" href="visualizations/references.html">References</a>
                   </div>
               </li>
              
@@ -96,7 +96,7 @@
       </nav>
       <!-- End of navbar -->
     
-      <br><br><br>
+      <br>
 
       <!-- filters box -->
 
@@ -237,11 +237,13 @@
     <div class="container-fluid">
 
         <div class="row">
+
             <div class="col-md-12">
-              <div id="mapcontainer">
-                <div id="map"></div>
-              </div>
+                <div id="datacontainer">
+                  <div id="datatable"></div>
+                </div>
             </div>
+
         </div>
   
 

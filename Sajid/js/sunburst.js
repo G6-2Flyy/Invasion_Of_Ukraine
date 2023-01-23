@@ -43,7 +43,7 @@ function populatefilterlists(data) {
     var month_list_array = Array.from(month_list);
 
     events_list_array.forEach((events) => d3.select("#selmaineventset").append("option").text(events));
-    sub_events_list_array.forEach((events) => d3.select("#selsubeventset").append("option").text(events));
+    // sub_events_list_array.forEach((events) => d3.select("#selsubeventset").append("option").text(events));
     sources_list_array.forEach((source) => d3.select("#selsourceset").append("option").text(source));
     month_list_array.forEach((month) => d3.select("#selmonthset").append("option").text(month));
     min_fatalities_array.forEach((fatalnumber) => d3.select("#selminfatalset").append("option").text(fatalnumber));

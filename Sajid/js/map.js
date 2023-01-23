@@ -7,6 +7,34 @@ $(document).ready(function () {
             d3.json('data/geoBoundaries-UKR-ADM2.geojson').then(function(admin2_data){
 
             populatefilterlists(data);
+
+            d3.select("#selmaineventset").on("change", function () {
+
+                console.log("hello");
+                const sub_events_list = new Set();
+                let event_selected = d3.select("#selmaineventset").node().value;
+
+                if (event_selected == "All") {
+
+                    data.forEach(datapoints => sub_events_list.add(datapoints.sub_event_type));
+
+                }
+                else {
+
+                    data.forEach(datapoints =>  {
+                        if (datapoints.event_type == event_selected) {
+                            sub_events_list.add(datapoints.sub_event_type);
+                        }
+                    });
+                }
+
+                var sub_events_list_array = Array.from(sub_events_list);
+                $("#selsubeventset").empty();
+                d3.select("#selsubeventset").append("option").text("All");
+                sub_events_list_array.forEach((events) => d3.select("#selsubeventset").append("option").text(events));
+        
+              });
+
             makeMap(data, admin1_data, admin2_data);   
             $("#filter").on("click", function () {
                 let datafilt = filterdata(data);
@@ -133,6 +161,25 @@ function makeMap(data, admin1_data, admin2_data) {
     
       
     L.control.layers(baseMaps, overlayMaps).addTo(myMap);
+
+    // Create Legend
+
+    var info = L.control({
+        position: 'bottomright'
+        
+      });
+      
+      info.onAdd = function() {
+        var div = L.DomUtil.create("div", "legend");
+        return div;
+      };
+
+      info.addTo(myMap);
+
+      createLegend();
+    
+      
+    
     
 
 }
@@ -164,19 +211,21 @@ function populatefilterlists(data) {
     var max_fatalities_array = [100, 50, 20, 15, 10, 5, 4, 3, 2, 1];
     var month_list_array = Array.from(month_list);
 
-    events_list_array.forEach((events) => d3.select("#selmaineventset").append("option").text(events));
+    events_list_array.forEach(events => d3.select("#selmaineventset").append("option").text(events));
     sub_events_list_array.forEach((events) => d3.select("#selsubeventset").append("option").text(events));
-    sources_list_array.forEach((source) => d3.select("#selsourceset").append("option").text(source));
-    month_list_array.forEach((month) => d3.select("#selmonthset").append("option").text(month));
-    min_fatalities_array.forEach((fatalnumber) => d3.select("#selminfatalset").append("option").text(fatalnumber));
-    max_fatalities_array.forEach((fatalnumber) => d3.select("#selmaxfatalset").append("option").text(fatalnumber));   
-    instigator_list_array.forEach((instigator) => d3.select("#selinstigatorset").append("option").text(instigator));
+    sources_list_array.forEach(source => d3.select("#selsourceset").append("option").text(source));
+    month_list_array.forEach(month => d3.select("#selmonthset").append("option").text(month));
+    min_fatalities_array.forEach(fatalnumber => d3.select("#selminfatalset").append("option").text(fatalnumber));
+    max_fatalities_array.forEach(fatalnumber => d3.select("#selmaxfatalset").append("option").text(fatalnumber));   
+    instigator_list_array.forEach(instigator => d3.select("#selinstigatorset").append("option").text(instigator));
+    
+
 }
 
 function filterdata(data) {
 
     main_event = d3.select("#selmaineventset").node().value;
-    //sub_main_event = d3.select("#selsubmaineventset").node().value;
+    sub_main_event = d3.select("#selsubeventset").node().value;
     sel_month = d3.select("#selmonthset").node().value;
     sel_source = d3.select("#selsourceset").node().value;
     sel_instigator = d3.select("#selinstigatorset").node().value;
@@ -196,6 +245,12 @@ function filterdata(data) {
                 dataf = dataf.filter(datum => datum.event_type == main_event);
             }
 
+            if (sub_main_event == "All") {
+                dataf = dataf;
+            }
+            else {
+                dataf = dataf.filter(datum => datum.sub_event_type == sub_main_event);
+            }
             
             if (sel_month == "All") {
                 dataf = dataf;
@@ -237,3 +292,41 @@ function filterdata(data) {
 
     
 }
+
+// Make Legend
+
+function createLegend() {
+    document.querySelector(".legend").innerHTML = 
+  
+      `
+      <div class="card border-primary mb-3" style="max-width: 20rem;">
+      <div class="card-header" style = 'color:black;'>Events Legend</div>
+      <div class="card-body">
+         
+      <p style = 'background-color:white; color:black;'><svg width="16" height="16">
+      <rect width="16" height="16" style="fill:red;stroke-width:0;stroke:rgb(0,0,0)" />
+      </svg>&nbsp&nbsp&nbspExplosions/Remote violence</p>
+
+
+      <p style = 'background-color:white; color:black;'><svg width="16" height="16">
+      <rect width="16" height="16" style="fill:blue;stroke-width:0;stroke:rgb(0,0,0)" />
+      </svg>&nbsp&nbsp&nbspBattles</p>
+
+      <p style = 'background-color:white; color:black;'><svg width="16" height="16">
+      <rect width="16" height="16" style="fill:forestgreen;stroke-width:0;stroke:rgb(0,0,0)" />
+      </svg>&nbsp&nbsp&nbspStrategic developments</p>
+
+      <p style = 'background-color:white; color:black;'><svg width="16" height="16">
+      <rect width="16" height="16" style="fill:purple;stroke-width:0;stroke:rgb(0,0,0)" />
+      </svg>&nbsp&nbsp&nbspViolence against civilians</p>
+
+      <p style = 'background-color:white; color:black;'><svg width="16" height="16">
+      <rect width="16" height="16" style="fill:yellow;stroke-width:0;stroke:rgb(0,0,0)" />
+      </svg>&nbsp&nbsp&nbspProtests</p>
+      
+      </div>
+      </div>`  
+      
+  }
+
+  

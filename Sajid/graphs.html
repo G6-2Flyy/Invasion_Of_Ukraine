@@ -43,10 +43,10 @@
    <script src="https://d3js.org/d3.v5.min.js"></script>
 
    <!-- JavaScript -->
-   <script type="text/javascript" src="js/map.js"></script>    
+   <script type="text/javascript" src="js/graphs.js"></script>    
 
    <!-- Our CSS -->
-   <link rel="stylesheet" type="text/css" href="css/map.css">
+   <link rel="stylesheet" type="text/css" href="css/graphs.css">
 
 </head>
 
@@ -96,7 +96,7 @@
       </nav>
       <!-- End of navbar -->
     
-      <br><br><br>
+      <br>
 
       <!-- filters box -->
 
@@ -237,11 +237,19 @@
     <div class="container-fluid">
 
         <div class="row">
-            <div class="col-md-12">
-              <div id="mapcontainer">
-                <div id="map"></div>
+
+            <div class="col-md-6">
+              <div id="linecontainer">
+                <div id="linegraph"></div>
               </div>
             </div>
+
+            <div class="col-md-6">
+                <div id="barcontainer">
+                  <div id="bargraph"></div>
+                </div>
+            </div>
+
         </div>
   
 
