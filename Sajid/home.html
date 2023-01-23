@@ -36,8 +36,12 @@
         <div class="collapse navbar-collapse" id="navbarColor01">
           <ul class="navbar-nav ml-auto">
             
-            <li class="nav-item">
-              <a class="nav-link" href="dashboard.html">Dashboard</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dashboards</a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="visualizations/sunburst.html">Sunburst Graph</a>
+                    <a class="dropdown-item" href="visualizations/graphs.html">Other Graphs</a>
+                </div>
             </li>
 
             <li class="nav-item">
@@ -97,6 +101,12 @@
         <div class="row">
             <div class="col-md-12 text-center">
                 <p id="text2">Click on the <a href="dashboard.html">dashboard</a> or <a href="map.html">map</a> icons in the navigation bar to learn more</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 text-center">
+                <a href="sunburst.html" target="_blank"><img id="sunburstimage" src="images/sunburstimage.png" width="75%"></a>
             </div>
         </div>
 
