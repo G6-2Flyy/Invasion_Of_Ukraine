@@ -40,11 +40,13 @@ $(document).ready(function () {
 
         makeChart(data);
         makeLineChartHigh(data);
+        makeDonutChart(data)
 
         $("#filter").on("click", function () {
             let datafilt = filterdata(data);
             makeChart(datafilt);
             makeLineChartHigh(datafilt);
+            makeDonutChart(datafilt);
           });
 
     });
@@ -147,7 +149,7 @@ function filterdata(data) {
             dataf = dataf.filter(datum => datum.fatalities >= min_fatal);
             dataf = dataf.filter(datum => datum.fatalities <= max_fatal);
 
-            console.log(dataf);
+            // console.log(dataf);
             
             return dataf;
     }
@@ -179,36 +181,41 @@ function makeChart(data) {
 
   location_date_combined_array = [];
   for (i = 0; i < location_array.length; i++) {
-    location_date_combined_array.push(`${location_array[i]} ID: ${data_id_array[i]}`);
+    location_date_combined_array.push(`${i+1}-${location_array[i]}`);// );  
   }
 
-  console.log(location_date_combined_array);
+//   console.log(location_date_combined_array);
 
   var plot_data = [
     {
       x: location_date_combined_array,
       y: fatalities_array,
-      type: 'bar'
+      type: 'bar',
+      marker: {color: '#2C3E50'}
     }
   ];
 
   var layout = {
     title: 'The Top Ten War Incidents with the Highest Number of Fatalities',
+    plot_bgcolor: '#ECF0F1',
+    paper_bgcolor:"#FFF3",
     font:{
       family: 'Raleway, sans-serif'
     },
     showlegend: false,
     xaxis: {
-      tickangle: -45
+      title: "Event Locations",
+      tickangle: -25
     },
     yaxis: {
+      title: "Number of Fatalities",
       zeroline: false,
       gridwidth: 2
     },
     bargap :0.05
   };
 
-  Plotly.newPlot('bargraph', plot_data);
+  Plotly.newPlot('bargraph', plot_data, layout);
 
 }
 
@@ -233,8 +240,8 @@ let num_fatalities = [];
 
     }
 
-console.log(num_war_events);
-console.log("2ndPrint", num_fatalities);
+// console.log(num_war_events);
+// console.log("2ndPrint", num_fatalities);
 
 // Data retrieved
 
@@ -261,11 +268,11 @@ Highcharts.chart('high_container', {
     },
     yAxis: {
         title: {
-            text: 'War Events'
+            text: 'Count'
         },
         labels: {
             formatter: function () {
-                return this.value + '°';
+                return this.value;
             }
         }
     },
@@ -301,4 +308,65 @@ Highcharts.chart('high_container', {
 
 });
 
+}
+
+function makeDonutChart(data) {
+
+    const instigator_list = new Set();
+    data.forEach((datapoint) => {
+        instigator_list.add(datapoint.actor1);
+    })
+
+    var instigator_list_array = Array.from(instigator_list);
+
+    var instigator_values_array = [];
+
+    for (j = 0; j < instigator_list_array.length; j++) {
+        data_instigator = data.filter(datum => datum.actor1 == instigator_list_array[j]);
+        // console.log(data_instigator.length);
+        instigator_values_array.push(data_instigator.length);
+    }
+
+    console.log(instigator_list_array);
+    console.log(instigator_values_array);
+
+    lenth = instigator_list_array.length;
+
+    var ultimateColors =  ['#2C3E50', '#005BBC', '#96C59C', '#FFD600', '#A3B8CC', '#484538', '#023B1C', '#A18276', '#D3D5D7', '#191716', '#CD533B', '#25A18E', '#CAC4CE', '#EBBAB9', '#8D3B72', '#F68E5F', '#69353F']
+
+    var traces = [{
+        values: instigator_values_array,
+        labels: instigator_list_array,
+        rotation: 45,
+        domain: {column: 0},
+        name: 'Primary Conflict Event Instigators',
+        marker: {
+            colors: ultimateColors.slice(0,lenth)
+          },
+        hoverinfo: 'label+percent+name',
+        hole: .4,
+        type: 'pie'
+      }];
+      
+      var layout = {
+        title: 'Primary Instigator of Conflict Events',
+        plot_bgcolor: '#ECF0F1',
+        paper_bgcolor:"#FFF3",
+        annotations: [
+          {
+            font: {
+              size: 20
+            },
+            showarrow: false,
+            text: '',
+            x: 0.17,
+            y: 0.5
+          }],
+        height: 600,
+        width: 600,
+        showlegend: false,
+        // grid: {rows: 1, columns: 1}
+      };
+      
+      Plotly.newPlot('donutchart', traces, layout);
 }

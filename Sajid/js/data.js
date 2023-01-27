@@ -4,12 +4,42 @@ $(document).ready(function () {
 
 function createdatatable2() {
 
-    d3.text('data/table_html.txt').then(function(t_string){
-        document.getElementById("datatablecontainer").innerHTML += t_string;
+    d3.json('data/ukraine_war_data.json').then(function(data){
+
+        data_values = data.map(datum => Object.values(datum));
+        data_headers = Object.keys(data[0]);
+        data_columns = [];
+
+        for (i = 0; i < data_headers.length; i++) {
+            header = data_headers[i];
+            title_dict = {'title': `${header}`};
+            data_columns.push(title_dict);
+        }
+
+        console.log(data_values);
+        console.log(data_columns);
+
         $(document).ready(function() {
-            $('#data_table').DataTable();
-        })       
-    }); 
+
+            $('#data_table').DataTable({
+                data: data_values,
+                columns: data_columns,
+                fixedColumns: true,
+            });
+
+        });
+
+    });
+
+
+
+    // d3.text('data/table_html.txt').then(function(t_string){
+    //     document.getElementById("datatablecontainer").innerHTML += t_string;
+    //     $(document).ready(function() {
+    //         $('#data_table').DataTable();
+    //     })       
+    // }); 
+
 }
 
 
