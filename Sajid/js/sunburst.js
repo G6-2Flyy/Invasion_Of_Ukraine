@@ -5,10 +5,11 @@ $(document).ready(function() {
         d3.json('data/ukraine_war_data.json').then(function(data) {
 
         populatefilterlists(data);
-        makesunburst(data);
+        var parent_string = `Instigator: All<br>Source: All<br>Month: All<br>Minium Fatalities: All<br>Maximum Fatalities: All`
+        makesunburst(data, parent_string);
         $("#filter").on("click", function () {
             let datafilt = filterdata(data);
-            makesunburst(datafilt);
+            makesunburst(datafilt[0], datafilt[1]);
           });
 
     });
@@ -42,7 +43,7 @@ function populatefilterlists(data) {
     var max_fatalities_array = [100, 50, 20, 15, 10, 5, 4, 3, 2, 1];
     var month_list_array = Array.from(month_list);
 
-    events_list_array.forEach((events) => d3.select("#selmaineventset").append("option").text(events));
+    // events_list_array.forEach((events) => d3.select("#selmaineventset").append("option").text(events));
     // sub_events_list_array.forEach((events) => d3.select("#selsubeventset").append("option").text(events));
     sources_list_array.forEach((source) => d3.select("#selsourceset").append("option").text(source));
     month_list_array.forEach((month) => d3.select("#selmonthset").append("option").text(month));
@@ -53,7 +54,7 @@ function populatefilterlists(data) {
 
 function filterdata(data) {
 
-    main_event = d3.select("#selmaineventset").node().value;
+    // main_event = d3.select("#selmaineventset").node().value;
     //sub_main_event = d3.select("#selsubmaineventset").node().value;
     sel_month = d3.select("#selmonthset").node().value;
     sel_source = d3.select("#selsourceset").node().value;
@@ -67,12 +68,12 @@ function filterdata(data) {
 
             d3.select("#maxfatalerror").text("");
 
-            if (main_event == "All") {
-                dataf = dataf;
-            }
-            else {
-                dataf = dataf.filter(datum => datum.event_type == main_event);
-            }
+            // if (main_event == "All") {
+            //     dataf = dataf;
+            // }
+            // else {
+            //     dataf = dataf.filter(datum => datum.event_type == main_event);
+            // }
 
             
             if (sel_month == "All") {
@@ -99,15 +100,21 @@ function filterdata(data) {
             dataf = dataf.filter(datum => datum.fatalities >= min_fatal);
             dataf = dataf.filter(datum => datum.fatalities <= max_fatal);
 
-            console.log(dataf);
+            // console.log(dataf);
             
-            return dataf;
+            var parent_string = "hello";
+
+            parent_string = `Instigator: ${sel_instigator}<br>Source: ${sel_source}<br>Month: ${sel_month}<br>Minium Fatalities: ${min_fatal}<br>Maximum Fatalities: ${max_fatal}`
+            
+            console.log(parent_string);
+
+            return [dataf, parent_string];
     }
     else {
 
             d3.select("#maxfatalerror").text("Maximum fatalities must exceed minimum");
-            console.log(max_fatal);
-            console.log(min_fatal);
+            // console.log(max_fatal);
+            // console.log(min_fatal);
 
             return 0;
 
@@ -118,7 +125,7 @@ function filterdata(data) {
 
 
 
-function makesunburst(data) {
+function makesunburst(data, parent_string) {
 
     if (data != 0) {
 
@@ -170,7 +177,7 @@ function makesunburst(data) {
 
         for (j = 0; j < event_type_list.length; j++) {
             labels_data.push(event_type_list[j]);
-            parents_data.push("HELLO");
+            parents_data.push(parent_string);
             event_typ = event_type_list[j];
             values_data.push(event_type_dict[`${event_typ}`][0]);
 

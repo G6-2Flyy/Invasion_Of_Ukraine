@@ -75,45 +75,118 @@ function makeMap(data, admin1_data, admin2_data) {
         subdomains:['mt0','mt1','mt2','mt3']
     });
 
-    // Add administrative region boundaries
+    // Add administrative region boundaries       
 
-    let mapStyle1 = {
-        color: "red",
-        fillColor: "pink",
-        fillOpacity: 0.35,
-        weight: 3
-      };
+    let admin1 = L.geoJSON(admin1_data.features, {
+        style: function (feature) {
+          return {
+            color: "red",
+            fillColor: "pink",
+            fillOpacity: 0.35,
+            weight: 1.5
+          }
+        },
+        onEachFeature: function(feature, layer) {
+          // Set the mouse events to change the map styling.
+          layer.on({
+            // When a user's mouse cursor touches a map feature, the mouseover event calls this function, which makes that feature's opacity change to 90% so that it stands out.
+            mouseover: function(event) {
+              layer = event.target;
+              layer.setStyle({
+                fillOpacity: 0.35,
+                fillColor: "red"
+              });
+            },
+            // When the cursor no longer hovers over a map feature (that is, when the mouseout event occurs), the feature's opacity reverts back to 50%.
+            mouseout: function(event) {
+              layer = event.target;
+              layer.setStyle({
+                fillOpacity: 0.35,
+                fillColor: "pink"
+              });
+            },
+            // When a feature (neighborhood) is clicked, it enlarges to fit the screen.
+            click: function(event) {
+              myMap.fitBounds(event.target.getBounds());
+            }
+          });
+          // Giving each feature a popup with information that's relevant to it
+          layer.bindPopup("<h3>" + feature.properties.shapeName + "</h3>");
     
+        }
+      }); 
     
-    var admin1 = L.geoJSON(admin1_data.features, {
-    style: mapStyle1,
-    }).addTo(myMap);
+    // admin1.addTo(myMap);
 
     var admin1_layer = L.layerGroup([admin1]);
 
-    let mapStyle2 = {
-        color: "blue",
-        fillColor: "lightblue",
-        fillOpacity: 0.25,
-        weight: 1
-      };
+    // let mapStyle2 = {
+    //     color: "blue",
+    //     fillColor: "lightblue",
+    //     fillOpacity: 0.25,
+    //     weight: 1
+    //   };
     
     
-    var admin2 = L.geoJSON(admin2_data.features, {
-    style: mapStyle2,
-    }).addTo(myMap);
+    // var admin2 = L.geoJSON(admin2_data.features, {
+    // style: mapStyle2,
+    // });//.addTo(myMap);
+
+    // Add smaller region boundaries
+
+    let admin2 = L.geoJSON(admin2_data.features, {
+        style: function (feature) {
+          return {
+            color: "blue",
+            fillColor: "lightblue",
+            fillOpacity: 0.35,
+            weight: 1
+          }
+        },
+        onEachFeature: function(feature, layer) {
+          // Set the mouse events to change the map styling.
+          layer.on({
+            // When a user's mouse cursor touches a map feature, the mouseover event calls this function, which makes that feature's opacity change to 90% so that it stands out.
+            mouseover: function(event) {
+              layer = event.target;
+              layer.setStyle({
+                fillOpacity: 0.35,
+                fillColor: "blue"
+              });
+            },
+            // When the cursor no longer hovers over a map feature (that is, when the mouseout event occurs), the feature's opacity reverts back to 50%.
+            mouseout: function(event) {
+              layer = event.target;
+              layer.setStyle({
+                fillOpacity: 0.35,
+                fillColor: "lightblue"
+              });
+            },
+            // When a feature (neighborhood) is clicked, it enlarges to fit the screen.
+            click: function(event) {
+              myMap.fitBounds(event.target.getBounds());
+            }
+          });
+          // Giving each feature a popup with information that's relevant to it
+          layer.bindPopup("<h5>" + feature.properties.shapeName + "</h5>");
+    
+        }
+      }); 
 
     var admin2_layer = L.layerGroup([admin2]);
 
     // Add a markers layer
 
     let event_markers = [];
+    let coords_array = [];
+    let incidents = L.markerClusterGroup();
 
     lenth = data.length;
 
     for (i = 0; i < lenth; i++) {
         datum = data[i];
         coords = [datum.latitude, datum.longitude];
+        coords_array.push(coords);
         event_data = datum.date;
         event_type = datum.event_type;
         sub_event_type = datum.sub_event_type;
@@ -135,15 +208,23 @@ function makeMap(data, admin1_data, admin2_data) {
                             color: "black",
                             fillColor: color_dict[event_type],
                             fillOpacity: 0.75,
-                            radius: 10000*(fatalities+1)**0.3,
+                            radius: 5000*(fatalities+1)**0.2,
                             weight: 0
                         }).bindPopup(`Event: ${event_type} <br> Sub Event: ${sub_event_type} <br> Fatalities: ${fatalities} <br> Notes: ${notes}`).addTo(myMap));
         
+
+        let incident_marker = L.marker(coords);
+
+        incidents.addLayer(incident_marker);
                             
         
     }
 
     var event_layer = L.layerGroup(event_markers);
+
+    // Add a heatlayer
+
+    let heatlayer = L.heatLayer(coords_array);
 
     // Collect base layers, overlays, and add a layer control
 
@@ -156,7 +237,9 @@ function makeMap(data, admin1_data, admin2_data) {
     var overlayMaps = {
         "Events": event_layer,
         "Admin Regions 1": admin1_layer,
-        "Admin Regions 2": admin2_layer
+        "Admin Regions 2": admin2_layer,
+        "Heat Map": heatlayer,
+        "Event Cluster Layer": incidents
     };
     
       

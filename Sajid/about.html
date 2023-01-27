@@ -11,7 +11,7 @@
     }
   </style>
 
-  <title>Map</title>
+  <title>About</title>
 
    <!-- Leaflet CSS -->
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
@@ -25,7 +25,7 @@
 
   <!-- Bootstrap Code -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/minty/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/flatly/bootstrap.min.css" integrity="sha384-H4X+4tKc7b8s4GoMrylmy2ssQYpDHoqzPa9aKXbDwPoPUA3Ra8PA5dGzijN+ePnH" crossorigin="anonymous">
 
  
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
@@ -46,7 +46,7 @@
    <!-- <script type="text/javascript" src="js/data.js"></script>     -->
 
    <!-- Our CSS -->
-   <link rel="stylesheet" type="text/css" href="css/about.css">
+   <link rel="stylesheet" type="text/css" href="css/referenes.css">
 
 </head>
 
@@ -98,7 +98,7 @@
     
       <br>
 
-      <!-- filters box -->
+      <!-- references box -->
 
       <div class="container-fluid">
 
@@ -106,8 +106,8 @@
 
             <div class="col-md-12 text-center">
 
-                <div class="card text-white bg-info mb-3">
-                    <div class="card-header"><h4>Please select your filters</h4></div>
+                <div class="card bg-light mb-12">
+                    <div class="card-header"><h4>The Ukrainian Information Group</h4></div>
 
                     <div class="card-body">
 
@@ -117,105 +117,45 @@
 
                                 <div class="col-md-4 text-center">
                                 
-                                    <h5>Select Main Event</h5>
-
-                                    <select id="selmaineventset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>
-            
-                                    </select>
+                                    <p> Garrett Kidd
+                                    </p>
                                 
                                 </div>
 
                                 <div class="col-md-4 text-center">
-
-                                    <h5>Select Sub Event</h5>
                                 
-                                    <select id="selsubeventset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>                                    
-            
-                                    </select>
+                                    <p> Japhet Mwamba
+                                    </p>
                                 
                                 </div>
 
                                 <div class="col-md-4 text-center">
-
-                                    <h5>Select Sources</h5>
                                 
-                                    <select id="selsourceset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>                                        
-            
-                                    </select>
+                                    <p> Brenna Wallace
+                                    </p>
                                 
-                                </div>
+                                </div>                                            
 
-                            </div>
+                            </div>  
 
-                            <br><br>
+                            <div class = "row">
 
-                            <div class="row">
+                                <div class="col-md-6 text-center">
 
-                                <div class="col-md-4 text-center">
-
-                                    <h5>Select Month</h5>
-                                
-                                    <select id="selmonthset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>                                        
-            
-                                    </select>
+                                    <img src="images/bell.png" style = width:200px;>
+                                    
+                                    <p> Raymond Bell
+                                    </p>
                                 
                                 </div>
 
-                                <div class="col-md-4 text-center">
+                                <div class="col-md-6 text-center">
 
-                                    <h5>Select Minimum Fatalities</h5>
+                                    <img src="images/anjum.png" style = width:200px;>
                                 
-                                    <select id="selminfatalset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>0</option>                                 
-            
-                                    </select>
+                                    <p> <a href="https://sajid1760.github.io/sajid_anjum_cv/index.html">Sajid Anjum</a>
+                                    </p>
                                 
-                                </div>
-
-                                <div id="maxfatalcontainer" class="col-md-4 text-center">
-
-                                    <h5>Select Maximum Fatalities</h5>
-                                
-                                    <select id="selmaxfatalset"> <!-- onchange="optionChanged(this.value)"> -->  
-                                        
-                                        <option selected>350</option>
-            
-                                    </select>
-
-                                    <p id="maxfatalerror" style = color:red;></p>
-                                
-                                </div>
-
-                            </div>
-
-                            <br><br>
-
-                            <div class="row">
-
-                                <div class="col-md-4 text-center">
-
-                                    <h5>Select Instigator</h5>
-                                
-                                    <select id="selinstigatorset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>                                        
-            
-                                    </select>                                
-                                
-                                </div>
-
-                                <div class="col-md-8">
-                                    <br>
-                                    <button type="button" class="btn btn-primary" id="filter">Filter!</button>
                                 </div>
 
                             </div>  
@@ -232,24 +172,7 @@
 
       </div>
 
-    <!-- end filters box -->
-  
-    <div class="container-fluid">
-
-        <div class="row">
-
-            <div class="col-md-12">
-                <div>
-                  
-
-                    
-                </div>
-            </div>
-
-        </div>
-  
-
-    </div>
+    <!-- end references box -->
   
 </body>
 

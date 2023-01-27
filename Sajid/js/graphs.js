@@ -6,7 +6,7 @@ $(document).ready(function () {
 
         d3.select("#selmaineventset").on("change", function () {
 
-            console.log("hello");
+            // create Sub Events Menu
             const sub_events_list = new Set();
             let event_selected = d3.select("#selmaineventset").node().value;
 
@@ -30,6 +30,22 @@ $(document).ready(function () {
             sub_events_list_array.forEach((events) => d3.select("#selsubeventset").append("option").text(events));
     
         });
+
+    //     d3.json('data/RB_battle.json').then(function (data2) {
+    //       console.log('3rd print', data2);
+    //       makeLineChartHigh(data2);
+    //   })
+
+        // End Create Sub Events Menu
+
+        makeChart(data);
+        makeLineChartHigh(data);
+
+        $("#filter").on("click", function () {
+            let datafilt = filterdata(data);
+            makeChart(datafilt);
+            makeLineChartHigh(datafilt);
+          });
 
     });
     
@@ -146,4 +162,143 @@ function filterdata(data) {
     }
 
     
+}
+
+function makeChart(data) {
+  let filtered_data = data.filter(function(battle){
+    
+    return battle.fatalities > 0;
+  })
+  filtered_data = filtered_data.sort(function(a, b){return b.fatalities-a.fatalities});
+  filtered_data = filtered_data.slice(0, 10);
+//   console.log(filtered_data);
+
+  location_array = filtered_data.map(battle => battle.location);
+  fatalities_array = filtered_data.map(battle => battle.fatalities);
+  data_id_array = filtered_data.map(battle => battle.data_id);
+
+  location_date_combined_array = [];
+  for (i = 0; i < location_array.length; i++) {
+    location_date_combined_array.push(`${location_array[i]} ID: ${data_id_array[i]}`);
+  }
+
+  console.log(location_date_combined_array);
+
+  var plot_data = [
+    {
+      x: location_date_combined_array,
+      y: fatalities_array,
+      type: 'bar'
+    }
+  ];
+
+  var layout = {
+    title: 'The Top Ten War Incidents with the Highest Number of Fatalities',
+    font:{
+      family: 'Raleway, sans-serif'
+    },
+    showlegend: false,
+    xaxis: {
+      tickangle: -45
+    },
+    yaxis: {
+      zeroline: false,
+      gridwidth: 2
+    },
+    bargap :0.05
+  };
+
+  Plotly.newPlot('bargraph', plot_data);
+
+}
+
+function makeLineChartHigh(data) {
+
+// Gather Data
+
+months_array = ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Jan'];
+
+let num_war_events = [];
+let num_fatalities = [];
+
+    for (j = 0; j < months_array.length; j++) {
+
+        let fatalities_total = 0;
+        war_events_month = data.filter(datum => datum.event_date.split('-')[1] == months_array[j]);
+        num_war_events.push(war_events_month.length);
+        for (k = 0; k < war_events_month.length; k++) {
+            fatalities_total = fatalities_total + war_events_month[k].fatalities;
+        }
+        num_fatalities.push(fatalities_total);
+
+    }
+
+console.log(num_war_events);
+console.log("2ndPrint", num_fatalities);
+
+// Data retrieved
+
+// Make High chart
+
+
+Highcharts.chart('high_container', {
+    chart: {
+        type: 'spline'
+    },
+    title: {
+        text: 'Monthly Battles in Ukraine'
+    },
+    // subtitle: {
+    //     text: 'Source: ' +
+    //         '<a href="https://en.wikipedia.org/wiki/List_of_cities_by_average_temperature" ' +
+    //         'target="_blank">Wikipedia.com</a>'
+    // },
+    xAxis: {
+        categories: months_array,
+        accessibility: {
+            description: 'Months of the year'
+        }
+    },
+    yAxis: {
+        title: {
+            text: 'War Events'
+        },
+        labels: {
+            formatter: function () {
+                return this.value + '°';
+            }
+        }
+    },
+    tooltip: {
+        crosshairs: true,
+        shared: true
+    },
+    plotOptions: {
+        spline: {
+            marker: {
+                radius: 4,
+                lineColor: '#666666',
+                lineWidth: 1
+            }
+        }
+    },
+    series: [{
+        name: 'War Events',
+        marker: {
+            symbol: 'square'
+        },
+        data: num_war_events
+
+    },
+    {
+        name: 'Fatalities',
+        marker: {
+            symbol: 'square'
+        },
+        data: num_fatalities
+
+    }]
+
+});
+
 }

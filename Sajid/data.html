@@ -11,7 +11,7 @@
     }
   </style>
 
-  <title>Map</title>
+  <title>Data Table</title>
 
    <!-- Leaflet CSS -->
    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
@@ -45,8 +45,12 @@
    <!-- JavaScript -->
    <script type="text/javascript" src="js/data.js"></script>    
 
+   <!-- DataTable Library -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.css">  
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.js"></script>
+
    <!-- Our CSS -->
-   <link rel="stylesheet" type="text/css" href="css/data.css">
+   <!-- <link rel="stylesheet" type="text/css" href="css/data.css"> -->
 
 </head>
 
@@ -96,153 +100,42 @@
       </nav>
       <!-- End of navbar -->
     
-      <br>
-
-      <!-- filters box -->
-
-      <div class="container-fluid">
-
-        <div class="row">
-
-            <div class="col-md-12 text-center">
-
-                <div class="card text-white bg-info mb-3">
-                    <div class="card-header"><h4>Please select your filters</h4></div>
-
-                    <div class="card-body">
-
-                        <div class="container-fluid">
-
-                            <div class = "row">
-
-                                <div class="col-md-4 text-center">
-                                
-                                    <h5>Select Main Event</h5>
-
-                                    <select id="selmaineventset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>
-            
-                                    </select>
-                                
-                                </div>
-
-                                <div class="col-md-4 text-center">
-
-                                    <h5>Select Sub Event</h5>
-                                
-                                    <select id="selsubeventset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>                                    
-            
-                                    </select>
-                                
-                                </div>
-
-                                <div class="col-md-4 text-center">
-
-                                    <h5>Select Sources</h5>
-                                
-                                    <select id="selsourceset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>                                        
-            
-                                    </select>
-                                
-                                </div>
-
-                            </div>
-
-                            <br><br>
-
-                            <div class="row">
-
-                                <div class="col-md-4 text-center">
-
-                                    <h5>Select Month</h5>
-                                
-                                    <select id="selmonthset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>                                        
-            
-                                    </select>
-                                
-                                </div>
-
-                                <div class="col-md-4 text-center">
-
-                                    <h5>Select Minimum Fatalities</h5>
-                                
-                                    <select id="selminfatalset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>0</option>                                 
-            
-                                    </select>
-                                
-                                </div>
-
-                                <div id="maxfatalcontainer" class="col-md-4 text-center">
-
-                                    <h5>Select Maximum Fatalities</h5>
-                                
-                                    <select id="selmaxfatalset"> <!-- onchange="optionChanged(this.value)"> -->  
-                                        
-                                        <option selected>350</option>
-            
-                                    </select>
-
-                                    <p id="maxfatalerror" style = color:red;></p>
-                                
-                                </div>
-
-                            </div>
-
-                            <br><br>
-
-                            <div class="row">
-
-                                <div class="col-md-4 text-center">
-
-                                    <h5>Select Instigator</h5>
-                                
-                                    <select id="selinstigatorset"> <!-- onchange="optionChanged(this.value)"> -->
-
-                                        <option selected>All</option>                                        
-            
-                                    </select>                                
-                                
-                                </div>
-
-                                <div class="col-md-8">
-                                    <br>
-                                    <button type="button" class="btn btn-primary" id="filter">Filter!</button>
-                                </div>
-
-                            </div>  
-                            
-                        </div>
-                    
-                    </div>
-                    
-                </div>
-
-            </div>
-    
-        </div>
-
-      </div>
-
-    <!-- end filters box -->
+      <br><br><br>
   
     <div class="container-fluid">
 
         <div class="row">
+            
+            <div class="container-fluid">
 
-            <div class="col-md-12">
-                <div id="datacontainer">
-                  <div id="datatable"></div>
+                <div id="datatablecontainer" class="overflow-auto">
+
+                    <!-- <table id="data_table" class="display">  -->
+                        
+                        <!-- <table id="data_table" class="display">
+                            <thead>
+                                <tr>
+                                    <th>Column 1</th>
+                                    <th>Column 2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Row 1 Data 1</td>
+                                    <td>Row 1 Data 2</td>
+                                </tr>
+                                <tr>
+                                    <td>Row 2 Data 1</td>
+                                    <td>Row 2 Data 2</td>
+                                </tr>
+                            </tbody>
+                        </table> -->
+
+                    <!-- </table>                 -->
+
                 </div>
-            </div>
+
+            </div>               
 
         </div>
   

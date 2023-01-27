@@ -1,0 +1,10 @@
+#datatablecontainer {
+    padding-left: 20px;
+    padding-right: 20px;
+    border-style: solid;
+    border-color: lightgreen;
+    border-width: 2px;
+    overflow: scroll;
+    width: 1200px;
+    height: 800px;
+}
