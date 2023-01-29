@@ -80,8 +80,8 @@ function makeMap(data, admin1_data, admin2_data) {
     let admin1 = L.geoJSON(admin1_data.features, {
         style: function (feature) {
           return {
-            color: "red",
-            fillColor: "pink",
+            color: "#1B1918",
+            fillColor: "#A9A19E",
             fillOpacity: 0.35,
             weight: 1.5
           }
@@ -94,7 +94,7 @@ function makeMap(data, admin1_data, admin2_data) {
               layer = event.target;
               layer.setStyle({
                 fillOpacity: 0.35,
-                fillColor: "red"
+                fillColor: "#1B1918"
               });
             },
             // When the cursor no longer hovers over a map feature (that is, when the mouseout event occurs), the feature's opacity reverts back to 50%.
@@ -102,7 +102,7 @@ function makeMap(data, admin1_data, admin2_data) {
               layer = event.target;
               layer.setStyle({
                 fillOpacity: 0.35,
-                fillColor: "pink"
+                fillColor: "#A9A19E"
               });
             },
             // When a feature (neighborhood) is clicked, it enlarges to fit the screen.
@@ -137,8 +137,8 @@ function makeMap(data, admin1_data, admin2_data) {
     let admin2 = L.geoJSON(admin2_data.features, {
         style: function (feature) {
           return {
-            color: "blue",
-            fillColor: "lightblue",
+            color: "#22577A",
+            fillColor: "#90C0E0",
             fillOpacity: 0.35,
             weight: 1
           }
@@ -151,7 +151,7 @@ function makeMap(data, admin1_data, admin2_data) {
               layer = event.target;
               layer.setStyle({
                 fillOpacity: 0.35,
-                fillColor: "blue"
+                fillColor: "#22577A"
               });
             },
             // When the cursor no longer hovers over a map feature (that is, when the mouseout event occurs), the feature's opacity reverts back to 50%.
@@ -159,7 +159,7 @@ function makeMap(data, admin1_data, admin2_data) {
               layer = event.target;
               layer.setStyle({
                 fillOpacity: 0.35,
-                fillColor: "lightblue"
+                fillColor: "#90C0E0"
               });
             },
             // When a feature (neighborhood) is clicked, it enlarges to fit the screen.

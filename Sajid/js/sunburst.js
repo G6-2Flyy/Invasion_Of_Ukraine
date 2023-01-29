@@ -214,6 +214,7 @@ function makesunburst(data, parent_string) {
             
             var layout = {
             "margin": {"l": 0, "r": 0, "b": 0, "t": 0},
+            sunburstcolorway:['#2C3E50', '#005BBC', '#96C59C', '#FFD600', '#A3B8CC', '#484538', '#023B1C', '#A18276', '#D3D5D7', '#191716', '#CD533B', '#25A18E', '#CAC4CE', '#EBBAB9', '#8D3B72', '#F68E5F', '#69353F']
             };
             
             
