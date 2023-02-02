@@ -40,13 +40,13 @@ $(document).ready(function () {
 
         makeChart(data);
         makeLineChartHigh(data);
-        makeDonutChart(data)
+        makeDonutChart(data, data)
 
         $("#filter").on("click", function () {
             let datafilt = filterdata(data);
             makeChart(datafilt);
             makeLineChartHigh(datafilt);
-            makeDonutChart(datafilt);
+            makeDonutChart(data, datafilt);
           });
 
     });
@@ -317,7 +317,28 @@ Highcharts.chart('high_container', {
 
 }
 
-function makeDonutChart(data) {
+function makeDonutChart(data_original, data) {
+
+   // create colors dictionary
+
+    const original_instigator_list = new Set();
+    data_original.forEach((datapoint) => {
+        original_instigator_list.add(datapoint.actor1);
+    })
+
+    var original_instigator_list_array = Array.from(original_instigator_list);
+
+    var ultimateColors =  ['#2C3E50', '#005BBC', '#96C59C', '#FFD600', '#A3B8CC', '#484538', '#023B1C', '#A18276', '#D3D5D7', '#191716', '#CD533B', '#25A18E', '#CAC4CE', '#EBBAB9', '#8D3B72', '#F68E5F', '#69353F']
+
+    var colors_dict = {};
+
+    for (i = 0; i < original_instigator_list_array.length; i++) {
+        insti = original_instigator_list_array[i];
+        color = ultimateColors[i];
+        colors_dict[insti] = color;       
+    }
+
+    // end colors dictionary
 
     const instigator_list = new Set();
     data.forEach((datapoint) => {
@@ -337,9 +358,12 @@ function makeDonutChart(data) {
     console.log(instigator_list_array);
     console.log(instigator_values_array);
 
-    lenth = instigator_list_array.length;
+    colors_list = [];
 
-    var ultimateColors =  ['#2C3E50', '#005BBC', '#96C59C', '#FFD600', '#A3B8CC', '#484538', '#023B1C', '#A18276', '#D3D5D7', '#191716', '#CD533B', '#25A18E', '#CAC4CE', '#EBBAB9', '#8D3B72', '#F68E5F', '#69353F']
+    for (j = 0; j < instigator_list_array.length; j++) {
+        insti = instigator_list_array[j];
+        colors_list.push(colors_dict[insti]);
+    }
 
     var traces = [{
         values: instigator_values_array,
@@ -348,7 +372,7 @@ function makeDonutChart(data) {
         domain: {column: 0},
         name: 'Primary Conflict Event Instigators',
         marker: {
-            colors: ultimateColors.slice(0,lenth)
+            colors: colors_list
           },
         hoverinfo: 'label+percent+name',
         hole: .4,

@@ -301,6 +301,9 @@ function populatefilterlists(data) {
     min_fatalities_array.forEach(fatalnumber => d3.select("#selminfatalset").append("option").text(fatalnumber));
     max_fatalities_array.forEach(fatalnumber => d3.select("#selmaxfatalset").append("option").text(fatalnumber));   
     instigator_list_array.forEach(instigator => d3.select("#selinstigatorset").append("option").text(instigator));
+
+    month_array = ['January'];
+    month_array.push('February');
     
 
 }
